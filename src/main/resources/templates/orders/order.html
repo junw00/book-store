@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/items/{bookId} (bookId=${book.bookId})}" method="post">
+
+    <h3 th:text="${book.bookName}"></h3>
+    <p th:text="'수량: ' + ${quantity}"></p>
+    <p th:text="${totalPrice} + '원'"></p>
+    <input type="text" placeholder="basic-address" name="basicAddress">
+    <input type="text" placeholder="detail-address" name="detailAddress">
+    <input type="text" placeholder="zipcode" name="postalCode">
+    <select name="couponId" id="" >
+        <option value="">선택안함</option>
+        <span th:each="coupon: ${coupons}">
+            <option th:value="${coupon.couponId}" th:text="${coupon.opt}"></option>
+        </span>
+
+    </select>
+
+    <input type="hidden" name="quantity" th:value="${quantity}">
+    <input type="hidden" name="price" th:value="${book.price}">
+    <button type="submit" name="action" value="buy">구매하기</button>
+</form>
+
+
+</body>
+</html>

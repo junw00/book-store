@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+</head>
+<style>
+  .A {
+    display: flex;
+    align-items: center;
+  }
+</style>
+<body>
+<div>
+  <div th:replace="fragments/header :: header"/>
+  <div class="jumbotron">
+    <h1>HELLO SHOP</h1>
+    <div class="A" th:if="${member != null}">
+      <h3 th:text="${member.name + ' 님'}"></h3>
+      <a href="/logout">로그아웃</a>
+      <a href="/carts">장바구니</a>
+    </div>
+    <p class="lead" th:if="${member == null}">회원 기능</p>
+    <p class="lead" th:if="${member == null}">
+      <a class="btn btn-lg btn-secondary" href="/members/new">회원 가입</a>
+      <a class="btn btn-lg btn-secondary" href="/members" >로그인</a>
+    </p>
+    <p class="lead" th:if="${member != null}">주소 & 카드</p>
+    <p class="lead" th:if="${member != null}">
+      <a class="btn btn-lg btn-secondary" href="/address/new">주소 등록</a>
+      <a class="btn btn-lg btn-secondary" href="/card/new" >카드 등록</a>
+    </p>
+    <p class="lead">상품 기능</p> <p>
+      <a class="btn btn-lg btn-dark" href="/items">상품 목록</a> </p>
+    <p class="lead">주문 기능</p>
+    <p>
+      <a class="btn btn-lg btn-info" href="/order">상품 주문</a>
+      <a class="btn btn-lg btn-info" href="/orders">주문 내역</a>
+    </p>
+  </div>
+</div>
+<form action="/coupon" method="post" th:if="${member != null}">
+  <input type="hidden" th:value="${member.id}" name="memberId">
+  <button name="action" value="10%" type="submit">10%쿠폰 발급받기</button>
+  <button name="action" value="1000" type="submit">1000원 쿠폰발급받기</button>
+</form>
+</body>
+</html>

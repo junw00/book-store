@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<body>
+<div th:replace="/fragments/header :: header"/>
+<form th:action="@{/items/{bookId} (bookId=${book.bookId})}" method="post">
+
+    <h3 th:text="${book.bookName}"></h3>
+    <input type="hidden" name="price" th:value="${book.price}">
+    <p th:text="${book.price}"></p>
+    <label for="quantity"></label>
+
+    <input type="number" id="quantity" name="quantity" th:min="1" th:max="${book.stock}" th:value="1"/>
+
+    <button value="cart" type="submit" name="action">장바구니 담기</button>
+</form>
+    <button th:onclick="'order('+ ${book.bookId} +')'">구매하기</button>
+    <script>
+        const order = (bookId) => {
+            const quantity = parseInt(document.getElementById("quantity").value);
+            axios.get(`/orders/${bookId}`, {
+                params: { quantity: quantity }
+            }).then((res) => {
+                // 성공 시 페이지 리디렉션
+                window.location.href = `/orders/${bookId}?quantity=${quantity}`;
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+
+    </script>
+</body>
+</html>
